@@ -24,7 +24,8 @@ set_image_swww() {
 }
 
 set_video_wallpaper() {
-  mpvpaper -o "no-audio --loop-playlist shuffle" '*' "$VIDEO" &
+  pkill mpvpaper
+  mpvpaper --auto-pause -o "no-audio --loop-playlist shuffle" '*' "$VIDEO" &
   wal -i "$VIDEO" --cols16
   pkill swww-daemon
 }
@@ -47,7 +48,6 @@ select_random_vid() {
     exit 1
   fi
   echo "${wallpapers[RANDOM % ${#wallpapers[@]}]}"
-  pkill mpvpaper
 }
 
 #---------------------------------------------#
