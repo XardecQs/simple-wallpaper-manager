@@ -1,10 +1,8 @@
 #!/bin/bash
 
 #---------------------------------------------#
-
-IMAGE_DIR="/home/$(whoami)/Imágenes/wallpapers"
-VIDEO_DIR="/home/$(whoami)/Vídeos/VWallpapers"
-
+IMAGE_DIR="$HOME/Imágenes/Wallpapers"
+VIDEO_DIR="$HOME/Vídeos/Wallpapers"
 #----------------------------------------------#
 
 select_image() {
@@ -25,7 +23,7 @@ set_image_swww() {
 
 set_video_wallpaper() {
   pkill mpvpaper
-  mpvpaper --auto-pause -o "no-audio --loop-playlist shuffle" '*' "$VIDEO" &
+  mpvpaper --auto-pause -o "no-audio --loop-playlist shuffle" '*' "$VIDEO" --idle &
   wal -i "$VIDEO" --cols16
   pkill swww-daemon
 }
