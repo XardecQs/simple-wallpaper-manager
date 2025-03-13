@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #---------------------------------------------#
-IMAGE_DIR="$HOME/Imágenes/Wallpapers"
-VIDEO_DIR="$HOME/Vídeos/Wallpapers"
+IMAGE_DIR="$HOME/Media/Imágenes/Wallpapers"
+VIDEO_DIR="$HOME/Media/Videos/Wallpapers"
 #----------------------------------------------#
 
 select_image() {
@@ -40,10 +40,23 @@ select_random_img() {
 select_random_vid() {
   local wallpapers=($(find "$VIDEO_DIR" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" \)))
   if [[ ${#wallpapers[@]} -eq 0 ]]; then
-    echo "No se encontraron imágenes en la carpeta $VIDEO_DIR. Saliendo..."
+    echo "No se encontraron imágenes en la carpeta $VIDEO_DIR. Saliendo..."c
     exit 1
   fi
   echo "${wallpapers[RANDOM % ${#wallpapers[@]}]}"
+}
+
+sddm() {
+  WALLPAPER=$(cat /home/xardec/.cache/swww/eDP-1)
+  cp "$WALLPAPER" /usr/share/sddm/themes/sugar-candy/Backgrounds/wallpaper.jpg
+
+  ACCENT_COLOR=$(sed -n '10p' ~/.cache/wal/colors)
+  if [ -z "$ACCENT_COLOR" ]; then
+    ACCENT_COLOR="#fb884f"
+  fi
+  
+  sed -i "s/AccentColor=.*/AccentColor=$ACCENT_COLOR/" /usr/share/sddm/themes/sugar-candy/theme.conf
+
 }
 
 #---------------------------------------------#
@@ -65,17 +78,21 @@ case $CHOICE in
   "Imagen manual")
     select_image
     set_image_swww
+    sddm
     ;;
   "Imagen aleatoria")
     IMAGE=$(select_random_img)
     set_image_swww
+    sddm
     ;;
   "Video manual")
     select_video
     set_video_wallpaper
+    sddm
     ;;
   "Video aleatorio")
     VIDEO=$(select_random_vid)
     set_video_wallpaper
+    sddm
     ;;
 esac
