@@ -59,6 +59,10 @@ sddm() {
 
 }
 
+extras() {
+  swaync-client -rs
+}
+
 #---------------------------------------------#
 
 CHOICE=$1
@@ -79,20 +83,24 @@ case $CHOICE in
     select_image
     set_image_swww
     sddm
+    extras
     ;;
   "Imagen aleatoria")
     IMAGE=$(select_random_img)
     set_image_swww
     sddm
+    extras
     ;;
   "Video manual")
     select_video
     set_video_wallpaper
     sddm
+    extras
     ;;
   "Video aleatorio")
     VIDEO=$(select_random_vid)
     set_video_wallpaper
     sddm
+    extras
     ;;
 esac
